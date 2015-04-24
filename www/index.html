@@ -9,9 +9,10 @@
       .card { border: solid 1px #c2c2c2; margin: 1em; padding: 1em; width: 400px; float: left; background: #fff; }
       .card ol { margin: 0; padding: 0; }
       h2 { margin: 0 0 .5em; padding: 0; font-size: 2em; }
-      .post { list-style-type: none; margin: .5em 0; padding: 0; min-height: 150px; font-size: 1.3em; position: relative; background-position: 50% 50%; }
+      .post { list-style-type: none; margin: .5em 0; padding: 0; font-size: 1.3em; position: relative; background-position: 50% 50%; }
       .post:last-of-type { margin-bottom: 0; }
       .title { background: #000; opacity: .7; padding: .2em .5em; position: absolute; bottom: 10px; left: 10px; color: #fff; max-width: 360px; font-weight: bold; }
+      a { min-height: 150px; width: 100%; display: block; text-decoration: none; color: #fff; border: solid 1px #ebebeb; }
     </style>
   </head>
 <body onload="twizzle.start()">
@@ -20,23 +21,25 @@
 
   <!-- Template for the header -->
   <script type="text/html" id="tpl-header">
-    <h1><%= appName %></h1>
+    <h1><%- appName %></h1>
   </script>
 
   <!-- Template for a tag-card -->
   <script type="text/html" id="tpl-card">
     <div class="card">
-      <h2>#<%= tag %></h2>
+      <h2>#<%- tag %></h2>
       <ol>
-        <% posts %>
+        <%= posts %>
       </ol>
     </div>
   </script>
 
   <!-- Template for a single post -->
   <script type="text/html" id="tpl-post">
-    <li class="post" style="background-image: url('<%= image %>');">
-      <div class="title"><%= title %></div>
+    <li class="post">
+      <a style="background-image: url('<%- image %>');" href="<%= permalink %>">
+        <div class="title"><%= title %></div>
+      </a>
     </li>
   </script>
 
