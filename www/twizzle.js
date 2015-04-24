@@ -87,7 +87,7 @@ var twizzle = {
         list.push( tag.slug );
       } );
     } );
-    list = _.unique( list );
+    list = _.shuffle( _.unique( list ) );
 
     return list;
   },
@@ -103,12 +103,25 @@ var twizzle = {
       return;
     }
 
+    var postsHTML,
+        postsArr = [];
+
+    // Render each post into an array element
+    posts.map( function( post ) {
+      postsArr.push( this.renderPost( post ) );
+    }.bind( this ) );
+
+    // At this point, if we haven't rendered any posts, then don't render the card
+    postsHTML = postsArr.join( '' );
+    if ( ! postsHTML.length ) {
+      return;
+    }
+
+    // Render the card for this tag, with all posts rendered inside it
     $( '#twizzle' ).append(
       _.template( $( '#tpl-card' ).text() )( {
         tag: tag,
-        posts: posts.map( function( post ) {
-          return this.renderPost( post );
-        }.bind( this ) )
+        posts: postsHTML
       } )
     );
   },
@@ -118,6 +131,18 @@ var twizzle = {
    * use the template in #tpl-post to render the post into a card (see above).
    */
   renderPost: function( post ) {
-    return post.title;
+    var image = ( // big ugly path-check to make sure we have a featured image
+      post &&
+      post.featured_image &&
+      post.featured_image.attachment_meta &&
+      post.featured_image.attachment_meta.sizes &&
+      post.featured_image.attachment_meta.sizes.large
+    ) ? post.featured_image.attachment_meta.sizes.large.url : '';
+
+    return image ? _.template( $( '#tpl-post' ).text() )( {
+      image: image,
+      title: post.title,
+      permalink: post.link
+    } ) : null;
   }
 };
