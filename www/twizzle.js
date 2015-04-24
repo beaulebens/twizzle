@@ -99,14 +99,25 @@ var twizzle = {
    * #tpl-card to render.
    */
   renderCard: function( tag, posts ) {
-    console.log( tag, posts );
+    if ( _.isEmpty( posts ) ) {
+      return;
+    }
+
+    $( '#twizzle' ).append(
+      _.template( $( '#tpl-card' ).text() )( {
+        tag: tag,
+        posts: posts.map( function( post ) {
+          return this.renderPost( post );
+        }.bind( this ) )
+      } )
+    );
   },
 
   /**
    * Render an entry for a specific post. Should accept a post object and
    * use the template in #tpl-post to render the post into a card (see above).
    */
-  renderPost: function() {
-
+  renderPost: function( post ) {
+    return post.title;
   }
 };
