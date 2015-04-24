@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <title>twizzle</title>
+  <meta name="viewport" content="width=device-width, user-scalable=no">
+  <head>
+    <style>
+      body { font: 16px Helvetica, Arial, sans-serif; background: #ebebeb; color: #222; margin: .5em 0 0; padding: 0; }
+      h1 { text-align: center; font-size: 4em; }
+      .card { border: solid 1px #c2c2c2; margin: 1em; padding: 1em; width: 400px; float: left; background: #fff; }
+      .card ol { margin: 0; padding: 0; }
+      h2 { margin: 0 0 .5em; padding: 0; font-size: 2em; }
+      .post { list-style-type: none; margin: .5em 0; padding: 0; min-height: 150px; font-size: 1.3em; position: relative; background-position: 50% 50%; }
+      .post:last-of-type { margin-bottom: 0; }
+      .title { background: #000; opacity: .7; padding: .2em .5em; position: absolute; bottom: 10px; left: 10px; color: #fff; max-width: 360px; font-weight: bold; }
+    </style>
+  </head>
+<body onload="twizzle.start()">
+  <!-- This is where the application gets rendered -->
+  <div id="twizzle"></div>
+
+  <!-- Template for the header -->
+  <script type="text/html" id="tpl-header">
+    <h1><%= appName %></h1>
+  </script>
+
+  <!-- Template for a tag-card -->
+  <script type="text/html" id="tpl-card">
+    <div class="card">
+      <h2>#<%= tag %></h2>
+      <ol>
+        <% posts %>
+      </ol>
+    </div>
+  </script>
+
+  <!-- Template for a single post -->
+  <script type="text/html" id="tpl-post">
+    <li class="post" style="background-image: url('<%= image %>');">
+      <div class="title"><%= title %></div>
+    </li>
+  </script>
+
+  <!-- Load up all of our JS libraries etc -->
+  <script src="modules/jquery/dist/jquery.min.js"></script>
+  <script src="modules/lodash/index.js"></script>
+  <script src="twizzle.js"></script>
+</body>
+</html>
