@@ -33,16 +33,32 @@ var twizzle = {
    * renderBoard() to start rendering everything.
    */
   fetchPosts: function() {
+    $.getJSON(
+      'http://fishing.dentedreality.com.au/wp-json/posts?filter[posts_per_page]=20',
+      function( data ) {
+        this.renderBoard( data );
+      }.bind( this )
+    ).fail( function() {
+      this.handleRequestFailure();
+    }.bind( this ) );
+  },
 
+  /**
+   * Extremely basic error message if something goes wrong.
+   */
+  handleRequestFailure: function() {
+    $( '#twizzle' ).append(
+      '<p class="failed">Could not load posts from WordPress.</p>'
+    );
   },
 
   /**
    * Handle the main code-path of taking in a collection of posts and then
    * getting them rendered into cards etc on-screen. Append the board to
-   * #twizzle, wrapped in a div.
+   * #twizzle, wrapped in a <div/>.
    */
-  renderBoard: function() {
-
+  renderBoard: function( data ) {
+    console.log( data );
   },
 
   /**
