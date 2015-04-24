@@ -58,15 +58,25 @@ var twizzle = {
    * #twizzle, wrapped in a <div/>.
    */
   renderBoard: function( data ) {
-    console.log( data );
+    var tags = this.getUniqueTags( data );
+    console.log( tags );
   },
 
   /**
    * Given a collection of posts, figure out a list of unique tags applied
    * to them, and return that as an array.
    */
-  getUniqueTags: function() {
+  getUniqueTags: function( data ) {
+    var raw = _.pluck( data, 'terms.post_tag' );
+    var list = [];
+    raw.map( function( tags ) {
+      _.each( tags, function( tag ) {
+        list.push( tag.slug );
+      } );
+    } );
+    list = _.unique( list );
 
+    return list;
   },
 
   /**
