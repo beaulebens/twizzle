@@ -48,6 +48,7 @@ var twizzle = {
    */
   handleRequestFailure: function() {
     $( '#twizzle' ).append(
+      // You shouldn't mix DOM in here like this!
       '<p class="failed">Could not load posts from WordPress.</p>'
     );
   },
@@ -58,8 +59,20 @@ var twizzle = {
    * #twizzle, wrapped in a <div/>.
    */
   renderBoard: function( data ) {
+    // Get a list of unique tags used across all posts
     var tags = this.getUniqueTags( data );
-    console.log( tags );
+
+    // Slice things so that we have posts listed per tag
+    tags.map( function( tag ) {
+      var posts = _.filter( data, function( post ) {
+        return _.any( post.terms.post_tag, function( postTag ) {
+          return postTag.slug === tag;
+        } );
+      } );
+
+      // Render a card for each tag
+      this.renderCard( tag, posts );
+    }.bind( this ) );
   },
 
   /**
@@ -85,8 +98,8 @@ var twizzle = {
    * of posts which will be rendered into that card. Use the template in
    * #tpl-card to render.
    */
-  renderCard: function() {
-
+  renderCard: function( tag, posts ) {
+    console.log( tag, posts );
   },
 
   /**
