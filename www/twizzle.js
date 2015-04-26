@@ -34,7 +34,7 @@ var twizzle = {
    */
   fetchPosts: function() {
     $.getJSON(
-      'http://fishing.dentedreality.com.au/wp-json/posts?filter[posts_per_page]=20',
+      'http://vip-workshop.dev/rest-api/fishing/wp-json/posts?filter[posts_per_page]=20',
       function( data ) {
         this.renderBoard( data );
       }.bind( this )
