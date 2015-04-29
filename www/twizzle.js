@@ -34,7 +34,7 @@ var twizzle = {
    */
   fetchPosts: function() {
     $.getJSON(
-      'http://vip-workshop.dev/rest-api/fishing/wp-json/posts?filter[posts_per_page]=20',
+      'http://vip-workshop.dev/rest-api/fishing/wp-json/wp/v2/posts?posts_per_page=10',
       function( data ) {
         this.renderBoard( data );
       }.bind( this )
